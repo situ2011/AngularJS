@@ -1,12 +1,17 @@
-<table>
+<table border="1">
 	<tr>
-		<td>a</td>
-		<td>b</td>
-		<td>c</td>
+		<td>用户名</td>
+		<td>性别</td>
+		<td>邮箱</td>
+		<td>操作</td>
 	</tr>
-	<tr>
-		<td>1</td>
-		<td>2</td>
-		<td>3</td>
+	<tr ng-repeat="user in users">
+		<td>{{user.username}}</td>
+		<td>{{user.gender}}</td>
+		<td>{{user.email}}</td>
+		<td>
+			<a href="#/update/{{user.id}}">修改</a>
+			<a href="">删除</a>
+		</td>
 	</tr>
 </table>
