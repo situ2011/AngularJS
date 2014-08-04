@@ -8,7 +8,7 @@ function umRouteConfig ( $routeProvider ) {
 		controller: ListController,
 		templateUrl: 'list.html'
 	})
-	.when( '/update/:id', {
+	.when( '/update/:id/:age', {
 		controller: UpdateController,
 		templateUrl: 'detail.html'
 	})
@@ -31,17 +31,25 @@ function ListController ( $scope, $http ) {
 
 function UpdateController ( $scope, $http, $routeParams ) {
 	var id = $routeParams.id;
-	console.log( id );
+	// var age = $routeParams.age;
+	// console.log( id );
 	$http.get( 'server/user.json' ).success( function ( data, status, headers, config ) {
-		//console.log( data );
-		 $scope.user = data;
-		 console.log($scope.user)
-		var len=data.length;
-		for(var i=0;i<len;i++){
-			console.log(data[i].id);
-			if(id==data[i].id){
-				$scope.xiuUser=data[i];	
-			}			
-		}
+		// console.log( data[ id ] );
+		$scope.xiuUser = getObjById( id, data );	
 	});
+	
+	$scope.update = function () {
+		// console.log( $scope.xiuUser )
+		$http.get( 'server/user.json', { params: $scope.xiuUser } );
+	}
+}
+
+function getObjById ( id, obj ) {
+	var len = obj.length;
+	for(var i=0; i<len; i++){
+		if( id == obj[i].id ){
+			return obj[i];
+		}		
+	}
+	return null;
 }
